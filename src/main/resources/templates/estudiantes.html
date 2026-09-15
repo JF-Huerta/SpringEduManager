@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Estudiantes</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contenedor {
+            width: 85%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .encabezado {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .tarjeta {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .boton-guardar {
+            background-color: #2f6fed;
+            color: white;
+        }
+
+        .boton-guardar:hover {
+            background-color: #2459bd;
+        }
+
+        .boton-logout {
+            background-color: #e74c3c;
+            color: white;
+            margin-top: 0;
+        }
+
+        .boton-logout:hover {
+            background-color: #c0392b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background-color: #2f6fed;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f2f5f9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="encabezado">
+
+            <h1>Gestión de Estudiantes</h1>
+
+            <form th:action="@{/logout}" method="post">
+                <button class="boton-logout" type="submit">
+                    Cerrar sesión
+                </button>
+            </form>
+
+        </div>
+
+        <div class="tarjeta">
+
+            <h2>Registrar nuevo estudiante</h2>
+
+            <form th:action="@{/estudiantes-web/guardar}"
+                  th:object="${estudiante}"
+                  method="post">
+
+                <label>Nombre</label>
+
+                <input type="text"
+                       th:field="*{nombre}"
+                       placeholder="Ej: Javiera Huerta"
+                       required>
+
+                <label>Email</label>
+
+                <input type="email"
+                       th:field="*{email}"
+                       placeholder="Ej: estudiante@springedu.cl"
+                       required>
+
+                <button class="boton-guardar" type="submit">
+                    Guardar estudiante
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="tarjeta">
+
+            <h2>Lista de estudiantes</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr th:each="estudiante : ${estudiantes}">
+                        <td th:text="${estudiante.id}"></td>
+                        <td th:text="${estudiante.nombre}"></td>
+                        <td th:text="${estudiante.email}"></td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
